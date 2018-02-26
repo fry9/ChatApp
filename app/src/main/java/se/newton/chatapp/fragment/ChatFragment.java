@@ -62,7 +62,7 @@ public class ChatFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // Create an adapter to show the messages from Firestore as a RecyclerView list
-        adapter = new MessageAdapter(Database.getMessagesByChannelOption(cid), Glide.with(this));
+        adapter = new MessageAdapter(Database.getMessagesByChannelOption(cid), this);
 
         Activity activity = getActivity();
         // Connect the adapter to the RecyclerView

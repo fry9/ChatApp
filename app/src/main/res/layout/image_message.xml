@@ -15,5 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:image="@{data.messageText}"
+        android:onClick="@{() -> data.viewImage()}"
         tools:text="TEXT_DATA" />
 </layout>

@@ -1,5 +1,8 @@
 package se.newton.chatapp.viewmodel;
 
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
@@ -22,6 +25,7 @@ import java.util.Date;
 
 import se.newton.chatapp.BR;
 import se.newton.chatapp.R;
+import se.newton.chatapp.activity.FullscreenImage;
 import se.newton.chatapp.model.Message;
 import se.newton.chatapp.model.User;
 import se.newton.chatapp.service.UserManager;
@@ -31,8 +35,10 @@ public class MessageViewModel extends BaseObservable {
     private Message message;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final RequestManager glideManager;
+    private final Context context;
 
-    public MessageViewModel(RequestManager glideManager, Message message) {
+    public MessageViewModel(Context context, RequestManager glideManager, Message message) {
+        this.context = context;
         this.message = message;
         if(message.getTimestamp() == null)
             message.setTimestamp(new Date());
@@ -76,6 +82,12 @@ public class MessageViewModel extends BaseObservable {
                         .placeholder(R.drawable.ic_profile_image_placeholder)
                 )
                 .into(view);
+    }
+
+    public void viewImage(){
+        Intent intent = new Intent(context, FullscreenImage.class);
+        intent.putExtra("uri", message.getData());
+        context.startActivity(intent);
     }
 
     public void setOrientation(View view) {

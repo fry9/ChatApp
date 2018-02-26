@@ -1,5 +1,6 @@
 package se.newton.chatapp.adapter;
 
+import android.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -22,14 +24,16 @@ import se.newton.chatapp.viewmodel.MessageViewModel;
 public class MessageAdapter extends FirestoreRecyclerAdapter<Message, MessageAdapter.ViewHolder> {
     private static final String TAG = "MessageAdapter";
     private final RequestManager glideManager;
+    private final Fragment fragment;
 
     //  options - This is the object that handles Firestore communications. Thanks to this we only
     //      need to specify a query, the adapter does the rest of the work.
     //  glideManager - This is out way to communicate with the Glide library, letting us manage
     //      background loading of images.
-    public MessageAdapter(FirestoreRecyclerOptions<Message> options, RequestManager glideManager) {
+    public MessageAdapter(FirestoreRecyclerOptions<Message> options, Fragment fragment) {
         super(options);
-        this.glideManager = glideManager;
+        this.fragment = fragment;
+        this.glideManager = Glide.with(fragment);
     }
 
     @Override
@@ -67,7 +71,7 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<Message, MessageAda
 
         // A message is supposed to be drawn to the screen. Create a new ViewModel and attach our
         //  glideManager as well as the message object.
-        MessageViewModel viewModel = new MessageViewModel(glideManager, message);
+        MessageViewModel viewModel = new MessageViewModel(fragment.getContext(), glideManager, message);
 
         // Have the ViewModel check if the layout should be aligned to the left or right
         viewModel.setOrientation(holder.itemView);
