@@ -80,6 +80,7 @@ public class MessageViewModel extends BaseObservable {
                 .load(imageUrl)
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.ic_profile_image_placeholder)
+                        .override(400)
                 )
                 .into(view);
     }
