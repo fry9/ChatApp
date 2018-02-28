@@ -35,10 +35,8 @@ public class MessageViewModel extends BaseObservable {
     private Message message;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final RequestManager glideManager;
-    private final Context context;
 
-    public MessageViewModel(Context context, RequestManager glideManager, Message message) {
-        this.context = context;
+    public MessageViewModel(RequestManager glideManager, Message message) {
         this.message = message;
         if(message.getTimestamp() == null)
             message.setTimestamp(new Date());
@@ -85,7 +83,8 @@ public class MessageViewModel extends BaseObservable {
                 .into(view);
     }
 
-    public void viewImage(){
+    public void viewImage(View v){
+        Context context = v.getContext();
         Intent intent = new Intent(context, FullscreenImage.class);
         intent.putExtra("uri", message.getData());
         context.startActivity(intent);

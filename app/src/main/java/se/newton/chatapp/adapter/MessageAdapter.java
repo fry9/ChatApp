@@ -71,7 +71,7 @@ public class MessageAdapter extends FirestoreRecyclerAdapter<Message, MessageAda
 
         // A message is supposed to be drawn to the screen. Create a new ViewModel and attach our
         //  glideManager as well as the message object.
-        MessageViewModel viewModel = new MessageViewModel(fragment.getContext(), glideManager, message);
+        MessageViewModel viewModel = new MessageViewModel(glideManager, message);
 
         // Have the ViewModel check if the layout should be aligned to the left or right
         viewModel.setOrientation(holder.itemView);
